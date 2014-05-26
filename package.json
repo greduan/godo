@@ -1,0 +1,23 @@
+{
+  "name": "godo",
+  "version": "0.0.0",
+  "description": "A simple todo app",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Greduan/godo"
+  },
+  "author": "Eduardo Lávaque <eduanlavaque@gmail.com>",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/Greduan/godo/issues"
+  },
+  "homepage": "https://github.com/Greduan/godo",
+  "dependencies": {
+    "docopt": "^0.4.0",
+    "mkdirp": "^0.5.0"
+  }
+}
