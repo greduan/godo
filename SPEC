@@ -28,7 +28,7 @@ Each tree would store all of its leafs in a special format. Each leaf would be
 stored in one line. So each line equals one leaf which in turn equals one task.
 It would use the following format:
 
-    The task's body #tag1 #tag2|||hash:sha1-longass-hash||tags:tag1,tag2||added:date
+    The task's body || id:sha1-hash || added:date || parent:sha1-hash
 
 - The leaf's body is what the user inputs as TEXT.
 - '|||' is the separator between the leaf's body and it's metadata.
