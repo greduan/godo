@@ -1,0 +1,38 @@
+$REPO
+=====
+
+Gittip: https://www.gittip.com/Greduan/
+
+Godo is a simple todo app. Meant to help you track what you have to do and stop
+worrying about organizing what you have to do. Greatly inspired by Steve Losh's
+`t`, as such, you can read the README for `t` and a lot of stuff will apply to
+Godo as well.
+
+Godo has no big organizing features, for these just distract you and don't let
+you get to what you really need to do.
+
+
+Installation
+------------
+
+You can get the latest stable and/or development version from the GitHub
+repo. <https://github.com/Greduan/godo>
+
+More detailed instructions coming soon.
+
+
+License
+-------
+
+    Copyright © 2014 Greduan <eduan@websharks-inc.com>
+    This work is free. You can redistribute it and/or modify it under the
+    terms of the Do What The Fuck You Want To Public License, Version 2,
+    as published by Sam Hocevar. See the LICENSE file for more details.
+
+
+Author(s) and contributors
+--------------------------
+
+Check the CONTRIBUTORS file for contributors to this project.
+
+For instructions and/or guidelines on contributing check the CONTRIBUTING file.
