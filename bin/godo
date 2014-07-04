@@ -5,7 +5,7 @@ var path = require('path');
 var Godo = require('..');
 var fs = require('fs');
 
-var doc = 'Usage: godo [-d DIR] [options] NAME [(TASK | -l | -f HASH)]' +
+var doc = 'Usage: godo [-d DIR] NAME [(TASK | -l | -f HASH | -e HASH TASK)]' +
 '\n' +
 '\nOptions:' +
 '\n  -h, --help     Show this screen.' +
@@ -33,7 +33,7 @@ function writeToFile(file, str, cb) {
 }
 
 // new task!
-if (cli['TASK']) {
+if (cli['TASK'] && !cli['-e']) {
 	fs.readFile(file, {encoding: 'utf8'}, function(err, data){
 		if (err) {
 			if (err.code === 'ENOENT') {
@@ -68,10 +68,23 @@ if (cli['-f']) {
 				console.error('FILE AND/OR DIRECTORY DOESN\'T EXIST\nThe file will be created but make sure the directory exists...');
 			} else return console.error(err);
 		}
-		var newTask = Godo.finishTask(cli['-f'], data).join('\n');
-		// check for files that don't exist
-		var toWrite = Godo.finishTask(cli['-f'], data);
+		var toWrite = Godo.removeTask(cli['-f'], data);
 		toWrite = toWrite.join('\n');
+
+		writeToFile(file, toWrite, function(a){});
+	});
+}
+
+// edit a task!
+if (cli['-e']) {
+	fs.readFile(file, {encoding: 'utf8'}, function(err, data){
+		if (err) {
+			if (err.code === 'ENOENT') {
+				console.error('FILE AND/OR DIRECTORY DOESN\'T EXIST\nThe file will be created but make sure the directory exists...');
+			} else return console.error(err);
+		}
+
+		var toWrite = Godo.editTask(cli['-e'], data, cli['TASK']);
 
 		writeToFile(file, toWrite, function(a){});
 	});
