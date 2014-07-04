@@ -5,7 +5,7 @@ var path = require('path');
 var Godo = require('..');
 var fs = require('fs');
 
-var doc = 'Usage: godo [-d DIR] [options] NAME [TASK]' +
+var doc = 'Usage: godo [-d DIR] [options] NAME [(TASK | -l)]' +
 '\n' +
 '\nOptions:' +
 '\n  -h, --help     Show this screen.' +
@@ -16,6 +16,7 @@ var doc = 'Usage: godo [-d DIR] [options] NAME [TASK]' +
 '\n  -f HASH        Finish a task.';
 var cli = docopt(doc, {help: true, version: '0.2.0'});
 // return console.log(cli);
+// NAME AND TASK CANNOT BE THE SAME!
 
 // TODO Should probably find a cleaner way to do this...
 var file = path.resolve('/home', process.env['USER'], cli['-d'], cli['NAME']);
@@ -25,12 +26,13 @@ function writeToFile(file, str, cb) {
 	fs.writeFile(file, str, function(err){
 		if (err) {
 			if (err.code === 'ENOENT')
-				return console.log('On second thought... DIRECTORY DOESN\'T EXIST!');
+				return console.log('\nOn second thought... DIRECTORY DOESN\'T EXIST!\nPlease make the '+path+' directory!');
 			else return console.error(err);
 		} else cb(arguments);
 	});
 }
 
+// new task!
 if (cli['TASK']) {
 	fs.readFile(file, {encoding: 'utf8'}, function(err, data){
 		if (err) {
@@ -43,6 +45,18 @@ if (cli['TASK']) {
 		var toWrite = (typeof data === 'undefined') ? newTask : data + newTask;
 
 		writeToFile(file, toWrite, function(a){});
+	});
+}
+
+// list tasks!
+if (cli['-l']) {
+	fs.readFile(file, {encoding: 'utf8'}, function(err, data){
+		if (err) {
+			if (err.code === 'ENOENT') {
+				console.error('FILE AND/OR DIRECTORY DOESN\'T EXIST\nThe file will be created but make sure the directory exists...');
+			} else return console.error(err);
+		}
+		Godo.listTasks(data);
 	});
 }
 
