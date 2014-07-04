@@ -5,7 +5,7 @@ var path = require('path');
 var Godo = require('..');
 var fs = require('fs');
 
-var doc = 'Usage: godo [-d DIR] [options] NAME [(TASK | -l)]' +
+var doc = 'Usage: godo [-d DIR] [options] NAME [(TASK | -l | -f HASH)]' +
 '\n' +
 '\nOptions:' +
 '\n  -h, --help     Show this screen.' +
@@ -57,6 +57,23 @@ if (cli['-l']) {
 			} else return console.error(err);
 		}
 		Godo.listTasks(data);
+	});
+}
+
+// finish a task!
+if (cli['-f']) {
+	fs.readFile(file, {encoding: 'utf8'}, function(err, data){
+		if (err) {
+			if (err.code === 'ENOENT') {
+				console.error('FILE AND/OR DIRECTORY DOESN\'T EXIST\nThe file will be created but make sure the directory exists...');
+			} else return console.error(err);
+		}
+		var newTask = Godo.finishTask(cli['-f'], data).join('\n');
+		// check for files that don't exist
+		var toWrite = Godo.finishTask(cli['-f'], data);
+		toWrite = toWrite.join('\n');
+
+		writeToFile(file, toWrite, function(a){});
 	});
 }
 
